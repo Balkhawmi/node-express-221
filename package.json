@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node dist/server.js",
     "start:dev": "nodemon src/server.ts",
     "db:migrate": " npx prisma migrate dev --name user-entity --create-only && npx prisma generate ",
     "db:push": " npx prisma db push ",
