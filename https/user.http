@@ -1,0 +1,15 @@
+POST http://localhost:4000/api/v1/users/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibG9naW4iOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJjbGllbnRJZCI6MiwiaWF0IjoxNzIzOTAyOTk3LCJleHAiOjE3MjM5MDY1OTd9.aAo5t49hul3biwg_5LtH5wI7qKKBflBvIRyYU9CmaCk
+
+
+{
+  "mail": "user10@gmail.com",
+  "password": "passer",
+  "clientId": 3,
+  "role": "ADMIN"
+}
+
+###
+GET http://localhost:4000/api/v1/users?role=BOUTIQUIER
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibG9naW4iOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJjbGllbnRJZCI6MiwiaWF0IjoxNzIzOTAyOTk3LCJleHAiOjE3MjM5MDY1OTd9.aAo5t49hul3biwg_5LtH5wI7qKKBflBvIRyYU9CmaCk

@@ -1,0 +1,30 @@
+POST http://localhost:4000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "mail": "user2@gmail.com",
+  "password": "passer"
+}
+
+###
+
+POST http://localhost:4000/api/v1/auth/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibG9naW4iOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MjM2NDc2NzksImV4cCI6MTcyMzY1MTI3OX0.z_WPrqo7fPxUnzxfEQpxwdQ2g_0tSRT0ptkfuvQsFRw
+
+
+{
+  "mail": "baila@gmail.com",
+  "password": "passer",
+  "clientId": 6,
+  "role": "CLIENT"
+}
+
+//BOUTIQUIER
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW4iOiJ1c2VyN0BnbWFpbC5jb20iLCJyb2xlIjoiQk9VVElRVUlFUiIsImlhdCI6MTcyMzY1ODk1MSwiZXhwIjoxNzIzNjeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW4iOiJ1c2VyN0BnbWFpbC5jb20iLCJyb2xlIjoiQk9VVElRVUlFUiIsImlhdCI6MTcyMzY1ODk1MSwiZXhwIjoxNzIzNjYyNTUxfQ.CPFloEfDoJ5ndvDKGcmXd8uKo-HLYqdSCy3OaFn5JbEYyNTUxfQ.CPFloEfDoJ5ndvDKGcmXd8uKo-HLYqdSCy3OaFn5JbE
+
+//ADMIN
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibG9naW4iOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MjM2NTkwODgsImV4cCI6MTcyMzY2MjY4OH0.ulloaXEd51xxZsV-2fsJmLC1LyahsaKHQSu9ZnDZF68
+
+//CLIENT
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibG9naW4iOiJiYWlsYUBnbWFpbC5jb20iLCJyb2xlIjoiQ0xJRU5UIiwiaWF0IjoxNzIzNjU5MTMyLCJleHAiOjE3MjM2NjI3MzJ9.oeUp4lDaPcS2ZnoKA3_qRkZLlIscV4mpXRf1Jh4VTy0
