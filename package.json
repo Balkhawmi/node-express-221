@@ -8,7 +8,8 @@
     "start:dev": "nodemon src/server.ts",
     "db:migrate": " npx prisma migrate dev --name user-entity --create-only && npx prisma generate ",
     "db:push": " npx prisma db push ",
-    "db:show": " npx prisma show "
+    "db:show": " npx prisma show ",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
