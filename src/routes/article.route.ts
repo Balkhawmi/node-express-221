@@ -14,7 +14,7 @@ const articleController = new ArticleController();
  *       - Articles
  *     summary: Liste tous les articles
  *     security:
- *        - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       '200':
  *         description: Liste des articles
@@ -41,7 +41,7 @@ routerArticle.get("/", [authentification(), roleautorisation(["BOUTIQUIER"])], a
  *       - Articles
  *     summary: Récupère un article par ID
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -75,7 +75,7 @@ routerArticle.get("/:id", [authentification(), roleautorisation(["BOUTIQUIER"])]
  *       - Articles
  *     summary: Met à jour la quantité en stock d'un article
  *     security:
- *        - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -121,7 +121,7 @@ routerArticle.put("/:id/stock", [authentification(), roleautorisation(["BOUTIQUI
  *       - Articles
  *     summary: Crée un nouvel article
  *     security:
- *        - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
