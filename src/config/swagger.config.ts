@@ -18,21 +18,22 @@ const options: swaggerJSDoc.Options = {
                 email: "mansouryathi@gmail.com",
               },
         },
-        componnents: {
+        components: {
             securitySchemes: {
-                BearerAuth: {
+                bearerAuth: {
                     type: "http",
                     scheme: "bearer",
-                    bearerFormat: "JWT",
-                },
-            },
+                    bearerFormat: "JWT"
+                }
+            }
         },
         security: [
             {
-                BearerAuth: [],
+                bearerAuth: []
             },
         ],
     },
 apis: ["src/routes/**.ts",".src/routes/schemas/*.ts"],
 };
 export const swaggerSpec = swaggerJSDoc(options);
+
