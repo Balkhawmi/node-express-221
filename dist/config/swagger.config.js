@@ -21,18 +21,18 @@ const options = {
                 email: "mansouryathi@gmail.com",
             },
         },
-        componnents: {
+        components: {
             securitySchemes: {
                 BearerAuth: {
                     type: "http",
                     scheme: "bearer",
-                    bearerFormat: "JWT",
-                },
-            },
+                    bearerFormat: "JWT"
+                }
+            }
         },
         security: [
             {
-                BearerAuth: [],
+                BearerAuth: []
             },
         ],
     },
