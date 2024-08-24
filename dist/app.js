@@ -4,11 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors")); // Importer le middleware CORS
 const article_route_1 = __importDefault(require("./routes/article.route"));
 const client_route_1 = __importDefault(require("./routes/client.route"));
 const dette_route_1 = __importDefault(require("./routes/dette.route"));
 const auth_route_1 = __importDefault(require("./routes/auth.route"));
-const paiement_route_1 = __importDefault(require("./routes/paiement.route")); // Ajout de l'import pour routerPaiement
+const paiement_route_1 = __importDefault(require("./routes/paiement.route"));
 const prisma_config_1 = __importDefault(require("./config/prisma.config"));
 const user_route_1 = __importDefault(require("./routes/user.route"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -22,6 +23,11 @@ class App {
     }
     // Middleware pour le traitement des requêtes JSON
     middleware() {
+        this.server.use((0, cors_1.default)({
+            origin: 'http://localhost:5173', // Permet seulement cette origine
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
+        }));
         this.server.use(express_1.default.json());
         this.server.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_config_1.swaggerSpec));
     }
