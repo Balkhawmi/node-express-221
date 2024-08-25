@@ -52,7 +52,7 @@ export class ClientController extends Controller{
   
   
   
-    
+
 
 async show(req: Request, res: Response) {
    try {
@@ -62,6 +62,7 @@ async show(req: Request, res: Response) {
            nom: true,
            prenom: true,
            telephone: true,
+           photo: true,
            user: true,
           }
        })
@@ -73,7 +74,65 @@ async show(req: Request, res: Response) {
        }
 }
 
-async edit(req: Request, res: Response) {
+
+async updateClient(req: Request, res: Response) {
+    try {
+        const clientId = parseInt(req.params.id);
+        const { nom, prenom, telephone, photo, mail, password } = req.body;
+
+        // Vérification que l'ID client est un nombre valide
+        if (isNaN(clientId)) {
+            return res.status(StatusCodes.BAD_REQUEST)
+                .send(RestResponse.response(null, StatusCodes.BAD_REQUEST, "ID client invalide."));
+        }
+
+        // Recherche du client existant
+        const existingClient = await prisma.client.findUnique({
+            where: { id: clientId },
+            include: { user: true } // Inclure les informations de l'utilisateur associé pour mise à jour
+        });
+
+        if (!existingClient) {
+            return res.status(StatusCodes.NOT_FOUND)
+                .send(RestResponse.response(null, StatusCodes.NOT_FOUND, "Client non trouvé."));
+        }
+
+        // Cryptage du mot de passe si un nouveau mot de passe est fourni
+        let hashPassword;
+        if (password) {
+            hashPassword = await encrypt.encryptpass(password);
+        }
+
+        // Mise à jour des informations du client et de l'utilisateur associé
+        const updatedClient = await prisma.client.update({
+            where: { id: clientId },
+            data: {
+                nom,
+                prenom,
+                telephone,
+                photo,
+                user: existingClient.user ? {
+                    update: {
+                        mail: mail ?? existingClient.user.mail, // Mettre à jour l'email si fourni
+                        password: hashPassword ?? existingClient.user.password, // Mettre à jour le mot de passe si fourni
+                    }
+                } : undefined // Ne pas toucher à l'utilisateur si mail et password ne sont pas fournis
+            },
+            include: {
+                user: true // Inclure les informations de l'utilisateur dans la réponse
+            }
+        });
+
+        res.status(StatusCodes.OK)
+            .send(RestResponse.response(updatedClient, StatusCodes.OK));
+    } catch (error) {
+        console.error("Error updating client:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .send(RestResponse.response(error, StatusCodes.INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du client."));
+    }
+}
+
+async GetById(req: Request, res: Response) {
    try {
        const newData = await prisma.client.findFirstOrThrow({
            where: { 
@@ -84,6 +143,7 @@ async edit(req: Request, res: Response) {
             nom: true,
             prenom: true,
             telephone: true,
+            photo: true,
               } 
        })
        res.status(StatusCodes.OK)
@@ -94,7 +154,7 @@ async edit(req: Request, res: Response) {
        }
 }
 
-async editByTelephone(req: Request, res: Response) {  
+async GetByTelephone(req: Request, res: Response) {  
    try {
        const newData = await prisma.client.findFirstOrThrow({
            where: { 
