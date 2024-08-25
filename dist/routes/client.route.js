@@ -38,7 +38,67 @@ const clientController = new client_controller_1.ClientController();
  *       '500':
  *         description: Erreur serveur
  */
-routerClient.get("/:id", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], clientController.edit);
+routerClient.get("/:id", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], clientController.GetById);
+/**
+ * @openapi
+ * /api/v1/clients/{id}:
+ *   put:
+ *     tags:
+ *       - Clients
+ *     summary: Met à jour un client par ID
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID du client à mettre à jour
+ *         schema:
+ *           type: integer
+ *       - in: body
+ *         name: client
+ *         required: true
+ *         description: Les informations du client à mettre à jour
+ *         schema:
+ *           type: object
+ *           properties:
+ *             nom:
+ *               type: string
+ *               description: Nom du client
+ *             prenom:
+ *               type: string
+ *               description: Prénom du client
+ *             telephone:
+ *               type: string
+ *               description: Numéro de téléphone du client
+ *             photo:
+ *               type: string
+ *               description: URL de la photo du client
+ *             mail:
+ *               type: string
+ *               description: Email de l'utilisateur associé (optionnel)
+ *             password:
+ *               type: string
+ *               description: Mot de passe de l'utilisateur associé (optionnel)
+ *     responses:
+ *       '200':
+ *         description: Client mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Client'
+ *       '400':
+ *         description: Requête invalide
+ *       '401':
+ *         description: Non autorisé
+ *       '403':
+ *         description: Interdit
+ *       '404':
+ *         description: Client non trouvé
+ *       '500':
+ *         description: Erreur serveur
+ */
+routerClient.put("/:id", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], clientController.updateClient);
 /**
  * @openapi
  * /api/v1/clients/{id}/dettes:
@@ -142,7 +202,7 @@ routerClient.get("/:id/user", [(0, authenticateToken_1.authentification)(), (0, 
  *       '500':
  *         description: Erreur serveur
  */
-routerClient.post("/telephone", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], clientController.editByTelephone);
+routerClient.post("/telephone", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], clientController.GetByTelephone);
 /**
  * @openapi
  * /api/v1/clients:

@@ -68,6 +68,7 @@ class ClientController extends controller_1.default {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        photo: true,
                         user: true,
                     }
                 });
@@ -80,7 +81,54 @@ class ClientController extends controller_1.default {
             }
         });
     }
-    edit(req, res) {
+    updateClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const clientId = parseInt(req.params.id, 10);
+            // Extraire les données à mettre à jour depuis le corps de la requête
+            const { nom, prenom, telephone, photo, mail, password } = req.body;
+            try {
+                // Vérifier si le client existe
+                const existingClient = yield prisma_config_1.default.client.findUnique({
+                    where: { id: clientId },
+                });
+                if (!existingClient) {
+                    return res.status(404).json({ message: "Client non trouvé" });
+                }
+                // Vérifier si l'adresse e-mail est déjà utilisée par un autre utilisateur
+                if (mail) {
+                    const mailCheck = yield prisma_config_1.default.client.findUnique({
+                        where: mail,
+                    });
+                    if (mailCheck && mailCheck.id !== clientId) {
+                        return res.status(400).json({ message: "L'adresse e-mail est déjà utilisée par un autre client." });
+                    }
+                }
+                // Construire un objet contenant uniquement les champs fournis
+                const updateData = {};
+                if (nom)
+                    updateData.nom = nom;
+                if (prenom)
+                    updateData.prenom = prenom;
+                if (telephone)
+                    updateData.telephone = telephone;
+                if (photo)
+                    updateData.photo = photo;
+                if (mail)
+                    updateData.mail = mail;
+                // Mettre à jour le client
+                const updatedClient = yield prisma_config_1.default.client.update({
+                    where: { id: clientId },
+                    data: updateData,
+                });
+                return res.status(200).json(updatedClient);
+            }
+            catch (error) {
+                console.error("Erreur lors de la mise à jour du client:", error);
+                return res.status(500).json({ message: "Erreur serveur" });
+            }
+        });
+    }
+    GetById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const newData = yield prisma_config_1.default.client.findFirstOrThrow({
@@ -92,6 +140,7 @@ class ClientController extends controller_1.default {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        photo: true,
                     }
                 });
                 res.status(http_status_codes_1.StatusCodes.OK)
@@ -103,7 +152,7 @@ class ClientController extends controller_1.default {
             }
         });
     }
-    editByTelephone(req, res) {
+    GetByTelephone(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const newData = yield prisma_config_1.default.client.findFirstOrThrow({

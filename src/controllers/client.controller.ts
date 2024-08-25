@@ -76,61 +76,57 @@ async show(req: Request, res: Response) {
 
 
 async updateClient(req: Request, res: Response) {
+    const clientId = parseInt(req.params.id, 10);
+
+    // Extraire les données à mettre à jour depuis le corps de la requête
+    const { nom, prenom, telephone, photo, mail, password } = req.body;
+
     try {
-        const clientId = parseInt(req.params.id);
-        const { nom, prenom, telephone, photo, mail, password } = req.body;
-
-        // Vérification que l'ID client est un nombre valide
-        if (isNaN(clientId)) {
-            return res.status(StatusCodes.BAD_REQUEST)
-                .send(RestResponse.response(null, StatusCodes.BAD_REQUEST, "ID client invalide."));
-        }
-
-        // Recherche du client existant
+        // Vérifier si le client existe
         const existingClient = await prisma.client.findUnique({
             where: { id: clientId },
-            include: { user: true } // Inclure les informations de l'utilisateur associé pour mise à jour
         });
 
         if (!existingClient) {
-            return res.status(StatusCodes.NOT_FOUND)
-                .send(RestResponse.response(null, StatusCodes.NOT_FOUND, "Client non trouvé."));
+            return res.status(404).json({ message: "Client non trouvé" });
         }
 
-        // Cryptage du mot de passe si un nouveau mot de passe est fourni
-        let hashPassword;
-        if (password) {
-            hashPassword = await encrypt.encryptpass(password);
+    
+
+        // Vérifier si l'adresse e-mail est déjà utilisée par un autre utilisateur
+        if (mail) {
+            const mailCheck = await prisma.client.findUnique({
+                where: mail,
+            });
+            if (mailCheck && mailCheck.id !== clientId) {
+                return res.status(400).json({ message: "L'adresse e-mail est déjà utilisée par un autre client." });
+            }
         }
 
-        // Mise à jour des informations du client et de l'utilisateur associé
+        // Construire un objet contenant uniquement les champs fournis
+        const updateData: any = {};
+        if (nom) updateData.nom = nom;
+        if (prenom) updateData.prenom = prenom;
+        if (telephone) updateData.telephone = telephone;
+        if (photo) updateData.photo = photo;
+        if (mail) updateData.mail = mail
+       
+
+        // Mettre à jour le client
         const updatedClient = await prisma.client.update({
             where: { id: clientId },
-            data: {
-                nom,
-                prenom,
-                telephone,
-                photo,
-                user: existingClient.user ? {
-                    update: {
-                        mail: mail ?? existingClient.user.mail, // Mettre à jour l'email si fourni
-                        password: hashPassword ?? existingClient.user.password, // Mettre à jour le mot de passe si fourni
-                    }
-                } : undefined // Ne pas toucher à l'utilisateur si mail et password ne sont pas fournis
-            },
-            include: {
-                user: true // Inclure les informations de l'utilisateur dans la réponse
-            }
+            data: updateData,
         });
 
-        res.status(StatusCodes.OK)
-            .send(RestResponse.response(updatedClient, StatusCodes.OK));
+        return res.status(200).json(updatedClient);
+
     } catch (error) {
-        console.error("Error updating client:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-            .send(RestResponse.response(error, StatusCodes.INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du client."));
+        console.error("Erreur lors de la mise à jour du client:", error);
+        return res.status(500).json({ message: "Erreur serveur" });
     }
 }
+
+
 
 async GetById(req: Request, res: Response) {
    try {
