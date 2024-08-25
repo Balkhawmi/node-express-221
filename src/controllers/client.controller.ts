@@ -74,12 +74,11 @@ async show(req: Request, res: Response) {
        }
 }
 
-
 async updateClient(req: Request, res: Response) {
     const clientId = parseInt(req.params.id, 10);
 
     // Extraire les données à mettre à jour depuis le corps de la requête
-    const { nom, prenom, telephone, photo, mail, password } = req.body;
+    const { nom, prenom, telephone, photo } = req.body;
 
     try {
         // Vérifier si le client existe
@@ -91,26 +90,12 @@ async updateClient(req: Request, res: Response) {
             return res.status(404).json({ message: "Client non trouvé" });
         }
 
-    
-
-        // Vérifier si l'adresse e-mail est déjà utilisée par un autre utilisateur
-        if (mail) {
-            const mailCheck = await prisma.client.findUnique({
-                where: mail,
-            });
-            if (mailCheck && mailCheck.id !== clientId) {
-                return res.status(400).json({ message: "L'adresse e-mail est déjà utilisée par un autre client." });
-            }
-        }
-
         // Construire un objet contenant uniquement les champs fournis
         const updateData: any = {};
         if (nom) updateData.nom = nom;
         if (prenom) updateData.prenom = prenom;
         if (telephone) updateData.telephone = telephone;
         if (photo) updateData.photo = photo;
-        if (mail) updateData.mail = mail
-       
 
         // Mettre à jour le client
         const updatedClient = await prisma.client.update({
@@ -125,6 +110,7 @@ async updateClient(req: Request, res: Response) {
         return res.status(500).json({ message: "Erreur serveur" });
     }
 }
+
 
 
 

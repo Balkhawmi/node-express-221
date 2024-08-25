@@ -56,31 +56,26 @@ routerClient.get("/:id",[authentification(),roleautorisation(["BOUTIQUIER"])],cl
  *         description: ID du client à mettre à jour
  *         schema:
  *           type: integer
- *       - in: body
- *         name: client
- *         required: true
- *         description: Les informations du client à mettre à jour
- *         schema:
- *           type: object
- *           properties:
- *             nom:
- *               type: string
- *               description: Nom du client
- *             prenom:
- *               type: string
- *               description: Prénom du client
- *             telephone:
- *               type: string
- *               description: Numéro de téléphone du client
- *             photo:
- *               type: string
- *               description: URL de la photo du client
- *             mail:
- *               type: string
- *               description: Email de l'utilisateur associé (optionnel)
- *             password:
- *               type: string
- *               description: Mot de passe de l'utilisateur associé (optionnel)
+ *     requestBody:
+ *       required: true
+ *       description: Les informations du client à mettre à jour
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nom:
+ *                 type: string
+ *                 description: Nom du client
+ *               prenom:
+ *                 type: string
+ *                 description: Prénom du client
+ *               telephone:
+ *                 type: string
+ *                 description: Numéro de téléphone du client
+ *               photo:
+ *                 type: string
+ *                 description: URL de la photo du client
  *     responses:
  *       '200':
  *         description: Client mis à jour avec succès
@@ -99,7 +94,6 @@ routerClient.get("/:id",[authentification(),roleautorisation(["BOUTIQUIER"])],cl
  *       '500':
  *         description: Erreur serveur
  */
-
 routerClient.put("/:id",[authentification(),roleautorisation(["BOUTIQUIER"])],clientController.updateClient);
 
 /**

@@ -85,7 +85,7 @@ class ClientController extends controller_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             const clientId = parseInt(req.params.id, 10);
             // Extraire les données à mettre à jour depuis le corps de la requête
-            const { nom, prenom, telephone, photo, mail, password } = req.body;
+            const { nom, prenom, telephone, photo } = req.body;
             try {
                 // Vérifier si le client existe
                 const existingClient = yield prisma_config_1.default.client.findUnique({
@@ -93,15 +93,6 @@ class ClientController extends controller_1.default {
                 });
                 if (!existingClient) {
                     return res.status(404).json({ message: "Client non trouvé" });
-                }
-                // Vérifier si l'adresse e-mail est déjà utilisée par un autre utilisateur
-                if (mail) {
-                    const mailCheck = yield prisma_config_1.default.client.findUnique({
-                        where: mail,
-                    });
-                    if (mailCheck && mailCheck.id !== clientId) {
-                        return res.status(400).json({ message: "L'adresse e-mail est déjà utilisée par un autre client." });
-                    }
                 }
                 // Construire un objet contenant uniquement les champs fournis
                 const updateData = {};
@@ -113,8 +104,6 @@ class ClientController extends controller_1.default {
                     updateData.telephone = telephone;
                 if (photo)
                     updateData.photo = photo;
-                if (mail)
-                    updateData.mail = mail;
                 // Mettre à jour le client
                 const updatedClient = yield prisma_config_1.default.client.update({
                     where: { id: clientId },
