@@ -153,6 +153,7 @@ class ClientController extends controller_1.default {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        photo: true,
                     }
                 });
                 res.status(http_status_codes_1.StatusCodes.OK)

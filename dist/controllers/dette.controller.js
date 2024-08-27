@@ -69,6 +69,7 @@ class DetteController extends controller_1.default {
                                 nom: true,
                                 prenom: true,
                                 telephone: true,
+                                photo: true
                             },
                         },
                         ArticleDette: {
@@ -135,7 +136,8 @@ class DetteController extends controller_1.default {
                                 id: true,
                                 nom: true,
                                 prenom: true,
-                                telephone: true
+                                telephone: true,
+                                photo: true
                             }
                         },
                         ArticleDette: {
@@ -244,7 +246,8 @@ class DetteController extends controller_1.default {
                                 id: true,
                                 nom: true,
                                 prenom: true,
-                                telephone: true
+                                telephone: true,
+                                photo: true
                             }
                         },
                         ArticleDette: {
