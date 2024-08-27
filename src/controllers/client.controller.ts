@@ -147,6 +147,7 @@ async GetByTelephone(req: Request, res: Response) {
             nom: true,
             prenom: true,
             telephone: true,
+            photo: true,
               } 
        })
        res.status(StatusCodes.OK)

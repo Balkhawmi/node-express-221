@@ -65,6 +65,7 @@ export class DetteController extends Controller {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        photo: true
                     },
                 },
                 ArticleDette: {
@@ -139,7 +140,8 @@ export class DetteController extends Controller {
              id: true,
              nom: true, 
              prenom: true,
-             telephone: true
+             telephone: true,
+             photo: true
            }
          },
          ArticleDette: {
@@ -254,7 +256,8 @@ export class DetteController extends Controller {
              id: true,
              nom: true,  
              prenom: true,
-             telephone: true
+             telephone: true,
+             photo: true
            }
          },
          ArticleDette: {

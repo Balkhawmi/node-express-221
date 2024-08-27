@@ -85,7 +85,8 @@ export class AuthController {
               id: true,
               nom: true,
               prenom: true,
-              telephone: true
+              telephone: true,
+              photo: true
             }
           }
         }
