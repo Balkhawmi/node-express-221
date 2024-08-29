@@ -142,4 +142,63 @@ routerArticle.put("/:id/stock", [(0, authenticateToken_1.authentification)(), (0
  *         description: Erreur serveur
  */
 routerArticle.post("/", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"]), (0, validator_middleware_1.validatorSchema)()], articleController.store);
+/**
+ * @openapi
+ * /api/v1/articles/libelle:
+ *   post:
+ *     tags:
+ *       - Articles
+ *     summary: Récupère les articles par libellé
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               libelle:
+ *                 type: string
+ *                 description: Le libellé de l'article à rechercher
+ *                 example: "chaise"
+ *     responses:
+ *       '200':
+ *         description: Articles trouvés
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: ID de l'article
+ *                     example: 1
+ *                   libelle:
+ *                     type: string
+ *                     description: Libellé de l'article
+ *                     example: "Chaise de bureau"
+ *                   prix:
+ *                     type: number
+ *                     format: float
+ *                     description: Prix de l'article
+ *                     example: 50.0
+ *                   quantiteStock:
+ *                     type: integer
+ *                     description: Quantité en stock
+ *                     example: 10
+ *       '400':
+ *         description: Requête invalide
+ *       '401':
+ *         description: Non autorisé
+ *       '403':
+ *         description: Interdit
+ *       '404':
+ *         description: Aucun article trouvé
+ *       '500':
+ *         description: Erreur serveur
+ */
+routerArticle.post("/libelle", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"]), (0, validator_middleware_1.validatorSchema)()], articleController.getArticleByLibelle);
 exports.default = routerArticle;

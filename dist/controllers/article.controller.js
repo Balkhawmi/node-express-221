@@ -133,5 +133,39 @@ class ArticleController extends controller_1.default {
             }
         });
     }
+    getArticleByLibelle(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { libelle } = req.params;
+                const articles = yield prisma_config_1.default.article.findMany({
+                    where: {
+                        libelle: {
+                            contains: libelle, // Recherche des articles dont le libellé contient la valeur donnée
+                        }
+                    },
+                    select: {
+                        id: true,
+                        libelle: true,
+                        prix: true,
+                        quantiteStock: true,
+                    }
+                });
+                if (articles.length === 0) {
+                    return res.status(http_status_codes_1.StatusCodes.NOT_FOUND)
+                        .send(response_1.default.response({ message: `Aucun article trouvé avec le libellé "${libelle}".` }, http_status_codes_1.StatusCodes.NOT_FOUND));
+                }
+                res.status(http_status_codes_1.StatusCodes.OK)
+                    .send(response_1.default.response(articles, http_status_codes_1.StatusCodes.OK));
+            }
+            catch (error) {
+                console.error('Erreur lors de la récupération des articles par libellé :', error);
+                res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR)
+                    .send(response_1.default.response({
+                    name: error.name,
+                    message: error.message,
+                }, http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR));
+            }
+        });
+    }
 }
 exports.ArticleController = ArticleController;
