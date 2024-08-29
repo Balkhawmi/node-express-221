@@ -116,27 +116,26 @@ async show(req: Request, res: Response) {
         }
     }
 
-    async getArticleByLibelle(req: Request, res: Response) {
+    async getArticleByLibelle(req: Request, res: Response) {  
         try {
-            const { libelle } = req.params;
+            
 
+            // Rechercher les articles dont le libellé contient la valeur donnée (insensible à la casse)
             const articles = await prisma.article.findMany({
-                where: {
-                    libelle: {
-                        contains: libelle,  // Recherche des articles dont le libellé contient la valeur donnée
-                    }
+                where: { 
+                    libelle: req.body.libelle
                 },
                 select: {
                     id: true,
                     libelle: true,
                     prix: true,
-                    quantiteStock: true,
-                }
+                    quantiteStock: true
+                } 
             });
 
             if (articles.length === 0) {
                 return res.status(StatusCodes.NOT_FOUND)
-                    .send(RestResponse.response({ message: `Aucun article trouvé avec le libellé "${libelle}".` }, StatusCodes.NOT_FOUND));
+                    .send(RestResponse.response({ message: `Aucun article trouvé avec le libellé "${req.body.libelle}".` }, StatusCodes.NOT_FOUND));
             }
 
             res.status(StatusCodes.OK)
@@ -147,7 +146,7 @@ async show(req: Request, res: Response) {
             res.status(StatusCodes.INTERNAL_SERVER_ERROR)
                 .send(RestResponse.response({
                     name: error.name,
-                    message: error.message,
+                    message: error.message
                 }, StatusCodes.INTERNAL_SERVER_ERROR));
         }
     }
