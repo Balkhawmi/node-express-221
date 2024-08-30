@@ -65,6 +65,8 @@ export class DetteController extends Controller {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        adresse: true,
+                        sexe: true,
                         photo: true
                     },
                 },
@@ -76,6 +78,9 @@ export class DetteController extends Controller {
                             select: {
                                 id: true,
                                 libelle: true,
+                                categorie: true,
+                                promotion: true,
+                                
                             },
                         },
                     },
@@ -141,6 +146,8 @@ export class DetteController extends Controller {
              nom: true, 
              prenom: true,
              telephone: true,
+             adresse: true,
+             sexe: true,
              photo: true
            }
          },
@@ -151,7 +158,10 @@ export class DetteController extends Controller {
              article: {
                select: {
                  id: true,
-                 libelle: true 
+                 libelle: true,
+                 categorie: true,
+                 promotion: true,
+               
                }
              }
            }
@@ -203,6 +213,9 @@ export class DetteController extends Controller {
             nom: true,
             prenom: true,
             telephone: true,
+            adresse: true,
+            sexe: true,
+            photo: true,
           },
         },
         ArticleDette: {
@@ -213,6 +226,9 @@ export class DetteController extends Controller {
               select: {
                 id: true,
                 libelle: true,
+                categorie: true,
+                promotion: true,
+               
               },
             },
           },
@@ -257,6 +273,8 @@ export class DetteController extends Controller {
              nom: true,  
              prenom: true,
              telephone: true,
+             adresse: true,
+             sexe: true,
              photo: true
            }
          },
@@ -267,7 +285,10 @@ export class DetteController extends Controller {
              article: {
                select: {
                  id: true,
-                 libelle: true  
+                 libelle: true,
+                 categorie: true,
+                 promotion: true,
+                
                }
              }
            }

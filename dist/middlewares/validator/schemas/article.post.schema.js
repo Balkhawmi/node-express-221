@@ -33,4 +33,10 @@ exports.articlePostSchema = zod_1.z.object({
     quantiteStock: zod_1.z.number().positive({
         message: "la quantite doit etre positive",
     }).min(1, "Le quantiteStock ne doit pas être vide"),
+    categorie: zod_1.z.string({
+        required_error: "la categorie est obligatoire",
+    }).min(1, "La categorie ne doit pas être vide"),
+    prixDetail: zod_1.z.number().positive({
+        message: "le prixDetail doit etre positive",
+    }).min(1, "Le prixDetail ne doit pas être vide")
 });

@@ -8,7 +8,7 @@ import { encrypt } from "../helpers/encrypt";
 export class ClientController extends Controller{
    async store(req: Request, res: Response) {
       try {
-          const { nom, prenom, telephone, photo, mail, password } = req.body;
+          const { nom, prenom, telephone, adresse, sexe, photo, mail, password } = req.body;
   
           // Cryptage du mot de passe si un mot de passe est fourni
           const hashPassword = password ? await encrypt.encryptpass(password) : undefined;
@@ -27,6 +27,8 @@ export class ClientController extends Controller{
                   nom,
                   prenom,
                   telephone,
+                  adresse,
+                  sexe,
                   photo,
                   user: mail && password ? {
                       create: {
@@ -62,6 +64,8 @@ async show(req: Request, res: Response) {
            nom: true,
            prenom: true,
            telephone: true,
+           adresse: true,
+           sexe: true,
            photo: true,
            user: true,
           }
@@ -78,7 +82,7 @@ async updateClient(req: Request, res: Response) {
     const clientId = parseInt(req.params.id, 10);
 
     // Extraire les données à mettre à jour depuis le corps de la requête
-    const { nom, prenom, telephone, photo } = req.body;
+    const { nom, prenom, telephone, adresse, sexe, photo } = req.body;
 
     try {
         // Vérifier si le client existe
@@ -95,6 +99,8 @@ async updateClient(req: Request, res: Response) {
         if (nom) updateData.nom = nom;
         if (prenom) updateData.prenom = prenom;
         if (telephone) updateData.telephone = telephone;
+        if (adresse) updateData.adresse = adresse;
+        if (sexe) updateData.sexe = sexe;
         if (photo) updateData.photo = photo;
 
         // Mettre à jour le client
@@ -125,6 +131,8 @@ async GetById(req: Request, res: Response) {
             nom: true,
             prenom: true,
             telephone: true,
+            adresse: true,
+            sexe: true,
             photo: true,
               } 
        })
@@ -147,6 +155,8 @@ async GetByTelephone(req: Request, res: Response) {
             nom: true,
             prenom: true,
             telephone: true,
+            adresse: true,
+            sexe: true,
             photo: true,
               } 
        })

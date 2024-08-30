@@ -69,6 +69,8 @@ class DetteController extends controller_1.default {
                                 nom: true,
                                 prenom: true,
                                 telephone: true,
+                                adresse: true,
+                                sexe: true,
                                 photo: true
                             },
                         },
@@ -80,6 +82,8 @@ class DetteController extends controller_1.default {
                                     select: {
                                         id: true,
                                         libelle: true,
+                                        categorie: true,
+                                        promotion: true,
                                     },
                                 },
                             },
@@ -137,6 +141,8 @@ class DetteController extends controller_1.default {
                                 nom: true,
                                 prenom: true,
                                 telephone: true,
+                                adresse: true,
+                                sexe: true,
                                 photo: true
                             }
                         },
@@ -147,7 +153,9 @@ class DetteController extends controller_1.default {
                                 article: {
                                     select: {
                                         id: true,
-                                        libelle: true
+                                        libelle: true,
+                                        categorie: true,
+                                        promotion: true,
                                     }
                                 }
                             }
@@ -196,6 +204,9 @@ class DetteController extends controller_1.default {
                                 nom: true,
                                 prenom: true,
                                 telephone: true,
+                                adresse: true,
+                                sexe: true,
+                                photo: true,
                             },
                         },
                         ArticleDette: {
@@ -206,6 +217,8 @@ class DetteController extends controller_1.default {
                                     select: {
                                         id: true,
                                         libelle: true,
+                                        categorie: true,
+                                        promotion: true,
                                     },
                                 },
                             },
@@ -247,6 +260,8 @@ class DetteController extends controller_1.default {
                                 nom: true,
                                 prenom: true,
                                 telephone: true,
+                                adresse: true,
+                                sexe: true,
                                 photo: true
                             }
                         },
@@ -257,7 +272,9 @@ class DetteController extends controller_1.default {
                                 article: {
                                     select: {
                                         id: true,
-                                        libelle: true
+                                        libelle: true,
+                                        categorie: true,
+                                        promotion: true,
                                     }
                                 }
                             }

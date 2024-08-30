@@ -1,6 +1,6 @@
 import { z } from "zod" ;
 import app from "../../../app";
-
+ 
 export const verifiLibelle = async(value: string) => {
     const count = await app.prisma.article.count({
         where: { libelle: value },
@@ -9,7 +9,7 @@ export const verifiLibelle = async(value: string) => {
 }
   ;
 export const articlePostSchema = z.object({
-    libelle: z.string({
+   libelle: z.string({
         required_error : "le libelle est obligatoire",
     }).min(1, "Le libelle ne doit pas être vide")
     .refine(verifiLibelle,"le lielle existe deja"),
@@ -20,5 +20,12 @@ export const articlePostSchema = z.object({
         message : "la quantite doit etre positive",
 
     }).min(1, "Le quantiteStock ne doit pas être vide"),
+    categorie: z.string({
+        required_error : "la categorie est obligatoire",
+    }).min(1, "La categorie ne doit pas être vide"),
+    prixDetail: z.number().positive({
+        message : "le prixDetail doit etre positive",
+
+    }).min(1, "Le prixDetail ne doit pas être vide")
  
 })

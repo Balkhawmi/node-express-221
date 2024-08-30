@@ -17,6 +17,12 @@
  *         telephone:
  *           type: string
  *           example: "+33612345678"
+ *         adresse:
+ *           type: string
+ *           example: Thies
+ *         sexe:
+ *           type: string
+ *           example: M
  *         photo:
  *           type: string
  *           example: "http://example.com/photo.jpg"
@@ -27,6 +33,8 @@
  *         - nom
  *         - prenom
  *         - telephone
+ *         - adresse
+ *         - sexe
  * 
  *     ClientRequest:
  *       type: object
@@ -40,6 +48,12 @@
  *         telephone:
  *           type: string
  *           example: "+33612345678"
+ *         adresse:
+ *           type: string
+ *           example: Thies
+ *         sexe:
+ *           type: string
+ *           example: M
  *         photo:
  *           type: string
  *           example: "http://example.com/photo.jpg"
@@ -53,6 +67,8 @@
  *         - nom
  *         - prenom
  *         - telephone
+ *         - adresse
+ *         - sexe
  *         - mail
  *         - password
  */

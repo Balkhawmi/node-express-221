@@ -18,11 +18,24 @@
  *         quantiteStock:
  *           type: integer
  *           example: 100
+ *         categorie:
+ *           type: string
+ *           example: categorie Example
+ *         promotion:
+ *           type: string
+ *           example: categorie Example
+ *         prixDetail:
+ *           type: number
+ *           format: float
+ *           example: 29.99
  *       required:
  *         - id
  *         - libelle
  *         - prix
- *         - quantiteStock
+ *         - quantiteStock 
+ *         - categorie
+ *         - promotion
+ *         - prixDetail
  * 
  *     ArticleRequest:
  *       type: object
@@ -37,8 +50,21 @@
  *         quantiteStock:
  *           type: integer
  *           example: 100
+ *         categorie:
+ *           type: string
+ *           example: categorie Example
+ *         promotion:
+ *           type: string
+ *           example: categorie Example
+ *         prixDetail:
+ *           type: number
+ *           format: float
+ *           example: 29.99
  *       required:
  *         - libelle
  *         - prix
  *         - quantiteStock
+ *         - categorie
+ *         - promotion
+ *         - prixDetail
  */

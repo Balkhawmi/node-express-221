@@ -18,6 +18,9 @@ model Article {
   libelle       String   @unique
   prix          Float
   quantiteStock Int
+  categorie            String
+  promotion            String
+  prixDetail            Float
   dettes        Dette[]        @relation("DetteArticle")
   ArticleDette  ArticleDette[]
   createdAt     DateTime @default(now())
@@ -40,6 +43,8 @@ model User {
     nom       String
     prenom    String
     telephone String
+    adresse   String
+    sexe      String
     photo     String
     dettes    Dette[]
     user      User?

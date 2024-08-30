@@ -6,7 +6,13 @@ interface payload {
     id: number,
     login: string,
     role: string,
-    clientId: number;
+    clientId: number,
+    nom: string,
+    prenom: string,
+    telephone: string,
+    adresse: string,
+    sexe: string,
+    photo: string,
 }
 
 const {JSECRET_ACCESS_TOKEN, JSECRET_TIME_TO_EXPIRE} = process.env

@@ -22,7 +22,7 @@ class ClientController extends controller_1.default {
     store(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nom, prenom, telephone, photo, mail, password } = req.body;
+                const { nom, prenom, telephone, adresse, sexe, photo, mail, password } = req.body;
                 // Cryptage du mot de passe si un mot de passe est fourni
                 const hashPassword = password ? yield encrypt_1.encrypt.encryptpass(password) : undefined;
                 // Vérification si un utilisateur avec le même email existe déjà
@@ -37,6 +37,8 @@ class ClientController extends controller_1.default {
                         nom,
                         prenom,
                         telephone,
+                        adresse,
+                        sexe,
                         photo,
                         user: mail && password ? {
                             create: {
@@ -68,6 +70,8 @@ class ClientController extends controller_1.default {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        adresse: true,
+                        sexe: true,
                         photo: true,
                         user: true,
                     }
@@ -85,7 +89,7 @@ class ClientController extends controller_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             const clientId = parseInt(req.params.id, 10);
             // Extraire les données à mettre à jour depuis le corps de la requête
-            const { nom, prenom, telephone, photo } = req.body;
+            const { nom, prenom, telephone, adresse, sexe, photo } = req.body;
             try {
                 // Vérifier si le client existe
                 const existingClient = yield prisma_config_1.default.client.findUnique({
@@ -102,6 +106,10 @@ class ClientController extends controller_1.default {
                     updateData.prenom = prenom;
                 if (telephone)
                     updateData.telephone = telephone;
+                if (adresse)
+                    updateData.adresse = adresse;
+                if (sexe)
+                    updateData.sexe = sexe;
                 if (photo)
                     updateData.photo = photo;
                 // Mettre à jour le client
@@ -129,6 +137,8 @@ class ClientController extends controller_1.default {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        adresse: true,
+                        sexe: true,
                         photo: true,
                     }
                 });
@@ -153,6 +163,8 @@ class ClientController extends controller_1.default {
                         nom: true,
                         prenom: true,
                         telephone: true,
+                        adresse: true,
+                        sexe: true,
                         photo: true,
                     }
                 });

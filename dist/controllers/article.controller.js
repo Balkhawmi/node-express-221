@@ -21,12 +21,15 @@ class ArticleController extends controller_1.default {
     store(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { libelle, prix, quantiteStock } = req.body;
+                const { libelle, prix, quantiteStock, categorie, promotion, prixDetail } = req.body;
                 const newData = yield prisma_config_1.default.article.create({
                     data: {
                         libelle,
                         prix,
-                        quantiteStock
+                        quantiteStock,
+                        categorie,
+                        promotion,
+                        prixDetail
                     },
                 });
                 // Envoi de la réponse avec le statut 201 (Created) pour indiquer que la ressource a été créée avec succès
@@ -54,6 +57,9 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
+                        categorie: true,
+                        promotion: true,
+                        prixDetail: true,
                     }
                 });
                 res.status(http_status_codes_1.StatusCodes.OK)
@@ -77,6 +83,9 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
+                        categorie: true,
+                        promotion: true,
+                        prixDetail: true,
                     }
                 });
                 res.status(http_status_codes_1.StatusCodes.OK)
@@ -101,6 +110,9 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true, // Récupérer la quantité actuelle en stock
+                        categorie: true,
+                        promotion: true,
+                        prixDetail: true,
                     }
                 });
                 // Calculer la nouvelle quantité en stock
@@ -114,6 +126,9 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
+                        categorie: true,
+                        promotion: true,
+                        prixDetail: true,
                     }
                 });
                 res.status(http_status_codes_1.StatusCodes.OK)
@@ -145,7 +160,10 @@ class ArticleController extends controller_1.default {
                         id: true,
                         libelle: true,
                         prix: true,
-                        quantiteStock: true
+                        quantiteStock: true,
+                        categorie: true,
+                        promotion: true,
+                        prixDetail: true,
                     }
                 });
                 if (articles.length === 0) {

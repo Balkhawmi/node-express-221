@@ -38,6 +38,14 @@ exports.clientPostSchema = zod_1.z.object({
     })
         .length(9, "Le téléphone doit contenir 9 chiffres")
         .refine((value) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, exports.verifiLiTelephone)(value); }), "Le téléphone existe déjà"),
+    adresse: zod_1.z.string({
+        required_error: "L'adresse est obligatoire",
+    })
+        .min(1, "L'adresse ne doit pas être vide"),
+    sexe: zod_1.z.string({
+        required_error: "Le sexe est obligatoire",
+    })
+        .min(1, "Le sexe ne doit pas être vide"),
     photo: zod_1.z.string({
         required_error: "La photo est obligatoire",
     })

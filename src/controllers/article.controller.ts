@@ -7,12 +7,15 @@ import { StatusCodes } from "http-status-codes";
 export class ArticleController extends Controller{
     async store(req: Request, res: Response) {
         try {
-        const { libelle, prix, quantiteStock } = req.body;
+        const { libelle, prix, quantiteStock, categorie, promotion, prixDetail } = req.body;
           const newData = await prisma.article.create({
             data: {
                 libelle,
                 prix,
-                quantiteStock
+                quantiteStock,
+                categorie,
+                promotion,
+                prixDetail
               },
           });
     
@@ -39,6 +42,9 @@ async show(req: Request, res: Response) {
                 libelle: true,
                 prix: true,
                 quantiteStock: true,
+                categorie: true,
+                promotion: true,
+                prixDetail: true,
                }
             })
             res.status(StatusCodes.OK)
@@ -60,6 +66,9 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true,
+                    categorie: true,
+                    promotion: true,
+                    prixDetail: true,
                    } 
             })
             res.status(StatusCodes.OK)
@@ -83,6 +92,9 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true, // Récupérer la quantité actuelle en stock
+                    categorie: true,
+                    promotion: true,
+                    prixDetail: true,
                 }
             });
     
@@ -98,6 +110,9 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true,
+                    categorie: true,
+                    promotion: true,
+                    prixDetail: true,
                 }
             });
     
@@ -129,7 +144,10 @@ async show(req: Request, res: Response) {
                     id: true,
                     libelle: true,
                     prix: true,
-                    quantiteStock: true
+                    quantiteStock: true,
+                    categorie: true,
+                    promotion: true,
+                    prixDetail: true,
                 } 
             });
 

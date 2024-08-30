@@ -86,6 +86,8 @@ export class AuthController {
               nom: true,
               prenom: true,
               telephone: true,
+              adresse: true,
+              sexe: true,
               photo: true
             }
           }
@@ -109,6 +111,12 @@ export class AuthController {
         login: user.mail,
         role: user.role,
         clientId: user.client.id,
+        nom: user.client.nom,
+        prenom: user.client.prenom,
+        telephone: user.client.telephone,
+        adresse: user.client.adresse,
+        sexe: user.client.sexe,
+        photo: user.client.photo,
       });
 
       res.status(StatusCodes.OK).json({ token });
