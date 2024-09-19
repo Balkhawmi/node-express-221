@@ -24,7 +24,7 @@ class App {
     // Middleware pour le traitement des requêtes JSON
     middleware() {
         this.server.use(cors({ // Ajouter le middleware CORS
-            origin: 'http://localhost:4000', // Permet seulement cette origine
+            origin: ['http://localhost:4000', 'http://localhost:5173'], // Permet seulement cette origine
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             allowedHeaders: ['Content-Type', 'Authorization'],
         }));
