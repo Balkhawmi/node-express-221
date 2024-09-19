@@ -7,13 +7,13 @@ import { StatusCodes } from "http-status-codes";
 export class ArticleController extends Controller{
     async store(req: Request, res: Response) {
         try {
-        const { libelle, prix, quantiteStock, categorie, promotion, prixDetail } = req.body;
+        const { libelle, prix, quantiteStock, categorieId, promotion, prixDetail } = req.body;
           const newData = await prisma.article.create({
             data: {
                 libelle,
                 prix,
                 quantiteStock,
-                categorie,
+                categorieId,
                 promotion,
                 prixDetail
               },
@@ -42,9 +42,30 @@ async show(req: Request, res: Response) {
                 libelle: true,
                 prix: true,
                 quantiteStock: true,
-                categorie: true,
+                categorie: {
+                    select: {
+                      id: true,
+                      libelle: true, 
+                    }
+                  },
                 promotion: true,
                 prixDetail: true,
+               }
+            })
+            res.status(StatusCodes.OK)
+            .send(RestResponse.response(newData,StatusCodes.OK));
+            } catch (error) {
+               res.status(StatusCodes.NOT_FOUND)
+               .send(RestResponse.response(error,StatusCodes.NOT_FOUND)); 
+            }
+    }
+
+    async showCategorie(req: Request, res: Response) {
+        try {
+            const newData = await prisma.categorie.findMany({
+               select:{
+                id: true,
+                libelle: true
                }
             })
             res.status(StatusCodes.OK)
@@ -66,7 +87,11 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true,
-                    categorie: true,
+                    categorie: {
+                        select: {
+                          libelle: true, 
+                        }
+                      },
                     promotion: true,
                     prixDetail: true,
                    } 
@@ -92,7 +117,11 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true, // Récupérer la quantité actuelle en stock
-                    categorie: true,
+                    categorie: {
+                        select: {
+                          libelle: true, 
+                        }
+                      },
                     promotion: true,
                     prixDetail: true,
                 }
@@ -110,7 +139,11 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true,
-                    categorie: true,
+                    categorie: {
+                        select: {
+                          libelle: true, 
+                        }
+                      },
                     promotion: true,
                     prixDetail: true,
                 }
@@ -145,7 +178,11 @@ async show(req: Request, res: Response) {
                     libelle: true,
                     prix: true,
                     quantiteStock: true,
-                    categorie: true,
+                    categorie: {
+                        select: {
+                          libelle: true, 
+                        }
+                      },
                     promotion: true,
                     prixDetail: true,
                 } 

@@ -21,13 +21,13 @@ class ArticleController extends controller_1.default {
     store(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { libelle, prix, quantiteStock, categorie, promotion, prixDetail } = req.body;
+                const { libelle, prix, quantiteStock, categorieId, promotion, prixDetail } = req.body;
                 const newData = yield prisma_config_1.default.article.create({
                     data: {
                         libelle,
                         prix,
                         quantiteStock,
-                        categorie,
+                        categorieId,
                         promotion,
                         prixDetail
                     },
@@ -57,9 +57,32 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
-                        categorie: true,
+                        categorie: {
+                            select: {
+                                id: true,
+                                libelle: true,
+                            }
+                        },
                         promotion: true,
                         prixDetail: true,
+                    }
+                });
+                res.status(http_status_codes_1.StatusCodes.OK)
+                    .send(response_1.default.response(newData, http_status_codes_1.StatusCodes.OK));
+            }
+            catch (error) {
+                res.status(http_status_codes_1.StatusCodes.NOT_FOUND)
+                    .send(response_1.default.response(error, http_status_codes_1.StatusCodes.NOT_FOUND));
+            }
+        });
+    }
+    showCategorie(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newData = yield prisma_config_1.default.categorie.findMany({
+                    select: {
+                        id: true,
+                        libelle: true
                     }
                 });
                 res.status(http_status_codes_1.StatusCodes.OK)
@@ -83,7 +106,11 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
-                        categorie: true,
+                        categorie: {
+                            select: {
+                                libelle: true,
+                            }
+                        },
                         promotion: true,
                         prixDetail: true,
                     }
@@ -110,7 +137,11 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true, // Récupérer la quantité actuelle en stock
-                        categorie: true,
+                        categorie: {
+                            select: {
+                                libelle: true,
+                            }
+                        },
                         promotion: true,
                         prixDetail: true,
                     }
@@ -126,7 +157,11 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
-                        categorie: true,
+                        categorie: {
+                            select: {
+                                libelle: true,
+                            }
+                        },
                         promotion: true,
                         prixDetail: true,
                     }
@@ -161,7 +196,11 @@ class ArticleController extends controller_1.default {
                         libelle: true,
                         prix: true,
                         quantiteStock: true,
-                        categorie: true,
+                        categorie: {
+                            select: {
+                                libelle: true,
+                            }
+                        },
                         promotion: true,
                         prixDetail: true,
                     }

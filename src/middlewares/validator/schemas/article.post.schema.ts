@@ -20,7 +20,7 @@ export const articlePostSchema = z.object({
         message : "la quantite doit etre positive",
 
     }).min(1, "Le quantiteStock ne doit pas être vide"),
-    categorie: z.string({
+    categorieId: z.number({
         required_error : "la categorie est obligatoire",
     }).min(1, "La categorie ne doit pas être vide"),
     prixDetail: z.number().positive({

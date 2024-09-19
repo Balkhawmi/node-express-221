@@ -20,6 +20,10 @@
  *           type: number
  *           format: float
  *           example: 150.75
+ *         demande:
+ *           type: string
+ *           enum: [EnCours, Accepter, Annuler]
+ *           example: EnCours
  *         statut:
  *           type: string
  *           enum: [solde, non_solde]
@@ -52,6 +56,10 @@
  *           type: number
  *           format: float
  *           example: 150.75
+ *         demande:
+ *           type: string
+ *           enum: [EnCours, Accepter, Annuler]
+ *           example: EnCours
  *         articles:
  *           type: array
  *           items:

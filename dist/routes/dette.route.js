@@ -113,7 +113,33 @@ routerDette.get("/:id", [(0, authenticateToken_1.authentification)(), (0, authen
 routerDette.post("/", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"]), (0, validator_middleware_1.validatorSchema)()], detteController.store);
 /**
  * @openapi
- * /api/v1/dettes/date:
+ * /api/v1/dettes/client:
+ *   post:
+ *     tags:
+ *       - Dette
+ *     summary: Crée une nouvelle dette
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DetteRequest'
+ *     responses:
+ *       '201':
+ *         description: Dette créée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Dette'
+ *       '400':
+ *         description: Bad Request - Données invalides
+ *       '500':
+ *         description: Internal Server Error - Erreur serveur
+ */
+routerDette.post("/", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["CLIENT"]), (0, validator_middleware_1.validatorSchema)()], detteController.storeClient);
+/**
+ * @openapi
+ * /api/v1/dettes/date/client:
  *   post:
  *     tags:
  *       - Dette

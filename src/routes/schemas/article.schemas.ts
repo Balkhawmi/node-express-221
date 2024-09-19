@@ -18,12 +18,12 @@
  *         quantiteStock:
  *           type: integer
  *           example: 100
- *         categorie:
- *           type: string
+ *         categorieId:
+ *           type: integer
  *           example: categorie Example
  *         promotion:
  *           type: string
- *           example: categorie Example
+ *           example: 123
  *         prixDetail:
  *           type: number
  *           format: float
@@ -33,7 +33,7 @@
  *         - libelle
  *         - prix
  *         - quantiteStock 
- *         - categorie
+ *         - categorieId
  *         - promotion
  *         - prixDetail
  * 
@@ -50,9 +50,9 @@
  *         quantiteStock:
  *           type: integer
  *           example: 100
- *         categorie:
- *           type: string
- *           example: categorie Example
+ *         categorieId:
+ *           type: integer
+ *           example: 123
  *         promotion:
  *           type: string
  *           example: categorie Example
@@ -64,7 +64,7 @@
  *         - libelle
  *         - prix
  *         - quantiteStock
- *         - categorie
+ *         - categorieId
  *         - promotion
  *         - prixDetail
  */

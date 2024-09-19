@@ -34,6 +34,32 @@ const articleController = new article_controller_1.ArticleController();
 routerArticle.get("/", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], articleController.show);
 /**
  * @openapi
+ * /api/v1/articles/categorie:
+ *   get:
+ *     tags:
+ *       - Categories
+ *     summary: Liste tous les categories
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Liste des categorie
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Categorie'
+ *       '401':
+ *         description: Non autorisé
+ *       '403':
+ *         description: Interdit
+ *       '500':
+ *         description: Erreur serveur
+ */
+routerArticle.get("/categorie", [(0, authenticateToken_1.authentification)(), (0, authenticateToken_1.roleautorisation)(["BOUTIQUIER"])], articleController.showCategorie);
+/**
+ * @openapi
  * /api/v1/articles/{id}:
  *   get:
  *     tags:

@@ -20,7 +20,7 @@ const http_status_codes_1 = require("http-status-codes");
 class DetteController extends controller_1.default {
     store(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { clientId, date, montantVerser, articles } = req.body;
+            const { clientId, date, montantVerser, demande, articles } = req.body;
             const transaction = () => __awaiter(this, void 0, void 0, function* () {
                 // Vérifier l'existence du client
                 const client = yield prisma_config_1.default.client.findUnique({
@@ -55,6 +55,116 @@ class DetteController extends controller_1.default {
                         date: new Date(),
                         montantDue, // Utiliser le montant calculé
                         montantVerser,
+                        demande: "Accepter",
+                        ArticleDette: {
+                            create: articles.map((article) => ({
+                                articleId: article.articleId,
+                                quantiteArticleDette: article.quantiteArticleDette,
+                            })),
+                        },
+                    },
+                    include: {
+                        client: {
+                            select: {
+                                id: true,
+                                nom: true,
+                                prenom: true,
+                                telephone: true,
+                                adresse: true,
+                                sexe: true,
+                                photo: true
+                            },
+                        },
+                        ArticleDette: {
+                            select: {
+                                articleId: true,
+                                quantiteArticleDette: true,
+                                article: {
+                                    select: {
+                                        id: true,
+                                        libelle: true,
+                                        categorie: true,
+                                        promotion: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+                let newPaiement = null;
+                // Créer le paiement correspondant au montant versé, si montantVerser > 0
+                if (montantVerser > 0) {
+                    newPaiement = yield prisma_config_1.default.paiement.create({
+                        data: {
+                            montant: montantVerser,
+                            date: new Date(), // Utiliser la date actuelle
+                            detteId: newDette.id, // Associer ce paiement à la dette créée
+                        },
+                    });
+                }
+                // Mise à jour du stock des articles
+                yield Promise.all(articles.map((article) => __awaiter(this, void 0, void 0, function* () {
+                    yield prisma_config_1.default.article.update({
+                        where: { id: article.articleId },
+                        data: {
+                            quantiteStock: {
+                                decrement: article.quantiteArticleDette, // Décrémenter la quantité en stock
+                            },
+                        },
+                    });
+                })));
+                return { newDette, newPaiement }; // Retourner la dette et le paiement (si créé)
+            });
+            try {
+                const result = yield prisma_config_1.default.$transaction(transaction);
+                res.status(http_status_codes_1.StatusCodes.CREATED)
+                    .send(response_1.default.response(result, http_status_codes_1.StatusCodes.CREATED));
+            }
+            catch (error) {
+                console.error('Error creating Dette:', error);
+                res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR)
+                    .send(response_1.default.response(error.message, http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR));
+            }
+        });
+    }
+    storeClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { clientId, date, montantVerser, demande, articles } = req.body;
+            const transaction = () => __awaiter(this, void 0, void 0, function* () {
+                // Vérifier l'existence du client
+                const client = yield prisma_config_1.default.client.findUnique({
+                    where: { id: clientId },
+                });
+                if (!client) {
+                    throw new Error(`Le client avec l'ID ${clientId} n'existe pas.`);
+                }
+                let montantTotal = 0;
+                for (const article of articles) {
+                    const articleData = yield prisma_config_1.default.article.findUnique({
+                        where: { id: article.articleId },
+                    });
+                    if (!articleData) {
+                        throw new Error(`L'article avec l'ID ${article.articleId} n'existe pas.`);
+                    }
+                    if (article.quantiteArticleDette > articleData.quantiteStock) {
+                        throw new Error(`La quantité demandée pour l'article ${articleData.libelle} dépasse la quantité en stock.`);
+                    }
+                    // Calcul du montant total dû
+                    montantTotal += articleData.prix * article.quantiteArticleDette;
+                }
+                // Vérification que le montant versé ne dépasse pas le montant total dû
+                if (montantVerser > montantTotal) {
+                    throw new Error(`Le montant versé (${montantVerser}) ne peut pas dépasser le montant total dû (${montantTotal}).`);
+                }
+                const montantDue = montantTotal - montantVerser;
+                // Créer la dette avec les articles associés
+                const newDette = yield prisma_config_1.default.dette.create({
+                    data: {
+                        clientId,
+                        date: new Date(),
+                        montantDue, // Utiliser le montant calculé
+                        montantVerser,
+                        demande: "EnCours",
                         ArticleDette: {
                             create: articles.map((article) => ({
                                 articleId: article.articleId,
@@ -134,6 +244,7 @@ class DetteController extends controller_1.default {
                         id: true,
                         date: true,
                         montantDue: true,
+                        demande: true,
                         montantVerser: true,
                         client: {
                             select: {
@@ -198,6 +309,7 @@ class DetteController extends controller_1.default {
                         date: true,
                         montantDue: true,
                         montantVerser: true,
+                        demande: true,
                         client: {
                             select: {
                                 id: true,
@@ -254,6 +366,7 @@ class DetteController extends controller_1.default {
                         date: true,
                         montantDue: true,
                         montantVerser: true,
+                        demande: true,
                         client: {
                             select: {
                                 id: true,

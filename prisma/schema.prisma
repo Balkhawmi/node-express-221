@@ -18,14 +18,25 @@ model Article {
   libelle       String   @unique
   prix          Float
   quantiteStock Int
-  categorie     String
+  categorieId   Int
   promotion     String
   prixDetail    Float
   dettes        Dette[]        @relation("DetteArticle")
   ArticleDette  ArticleDette[]
+  categorie     Categorie      @relation(fields: [categorieId], references: [id]) 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
+
+model Categorie {
+  id        Int      @id @default(autoincrement())
+  libelle   String   @unique
+  articles  Article[] 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
 
 model User {
   id        Int      @id @default(autoincrement())
@@ -68,8 +79,15 @@ model Dette {
   articles      Article[]      @relation("DetteArticle")
   Paiement      Paiement[]
   ArticleDette  ArticleDette[]
+  demande      Demande     @default(EnCours)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum Demande {
+  EnCours
+  Accepter
+  Annuler
 }
 
 model ArticleDette {
